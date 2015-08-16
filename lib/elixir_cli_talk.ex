@@ -19,7 +19,12 @@ defmodule ElixirCliTalk do
         arguments.
 
   """
-
+  
+  @doc """
+  When you tell mix what module to use to build the escript, will build a 
+  tool that runs the function main from that module once. The function gets
+  a single arguement that is the command line arguments as a list of strings.
+  """
   def main(args) do
       args |> parse_args |> process |> cleanup
   end
@@ -55,7 +60,7 @@ defmodule ElixirCliTalk do
   end 
 
   def cleanup({_options,_args}) do
-  System.halt(0)
+    System.halt(0)
   end 
 
 end
