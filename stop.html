@@ -18,7 +18,7 @@
     <div class="wrapper">
       <header>
         <h1>Elixir cli talk</h1>
-        <p>Slides for brief talk about writing CLI applications with Elixir</p>
+        <p>Slides for brief talk about writing CLI applications with Elixir with sample application</p>
         <p class="view"><a href="https://github.com/bbense/elixir_cli_talk">View the Project on GitHub <small>bbense/elixir_cli_talk</small></a></p>
         <ul>
           <li><a href="https://github.com/bbense/elixir_cli_talk/zipball/master">Download <strong>ZIP File</strong></a></li>
@@ -31,10 +31,36 @@
 <a id="writing-cli-applications-with-elixir" class="anchor" href="#writing-cli-applications-with-elixir" aria-hidden="true"><span class="octicon octicon-link"></span></a>Writing CLI Applications with Elixir</h1>
 
 <ul>
-<li><p>What is escript?</p></li>
-<li><p>How do you define main?</p></li>
-<li><p>How do you parse command line arguements?</p></li>
 <li><p>How do you stop?</p></li>
+<li><p>The default exit value of the program is 0 if the main function returns successfully, and 127 if any errors
+are encountered. However, you can set the exit status of the program using System.halt. <p>
+  <pre>
+    
+  def cleanup({_options,_args}) do
+    System.halt(0)
+  end 
+
+  </pre>
+
+</p></li>
+<li><p>Another useful strategy is to put the pid of the main program and any spawned processes in the options map. 
+You can then notify spawned processes at exit and have them
+send an all_done message to the main_pid. You can recieve these in your cleanup function to ensure that the program completes before the main process exits. 
+  <pre>
+    
+  def cleanup({_options,_args}) do
+    send options[:task_pid], { :finalize }
+    receive do 
+       { :all_done } -> System.halt(0)
+    end 
+  end 
+
+  </pre>
+
+
+</p></li>
+
+
 </ul>
       </section>
     </div>

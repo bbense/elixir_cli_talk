@@ -18,7 +18,7 @@
     <div class="wrapper">
       <header>
         <h1>Elixir cli talk</h1>
-        <p>Slides for brief talk about writing CLI applications with Elixir</p>
+        <p>Slides for brief talk about writing CLI applications with Elixir with sample application</p>
         <p class="view"><a href="https://github.com/bbense/elixir_cli_talk">View the Project on GitHub <small>bbense/elixir_cli_talk</small></a></p>
         <ul>
           <li><a href="https://github.com/bbense/elixir_cli_talk/zipball/master">Download <strong>ZIP File</strong></a></li>
@@ -32,7 +32,27 @@
 
 <ul>
 <li><p>How do you define main?</p></li>
-<li><p>In mix.exs, you can use the escript parameter to specify which module has the main function.<p></p></li>
+<li><p>In mix.exs, you can use the escript parameter to specify which module has the main function.<p>
+  <pre>
+    
+   def project do
+    [app: :elixir_cli_talk,
+     version: "0.0.1",
+     elixir: "~> 1.0",
+     build_embedded: Mix.env == :prod,
+     start_permanent: Mix.env == :prod,
+     escript: escript,
+     deps: deps]
+  end
+
+  def escript do
+    [main_module: ElixirCliTalk]
+  end
+  
+  </pre>
+
+</p></li>
+<li><p>You can then build a escript executable using the command</p><p> <code>mix escript.build</code> </p></li>
 </ul>
       </section>
     </div>
