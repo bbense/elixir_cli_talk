@@ -1,0 +1,2 @@
+defmodule ElixirCliTalk do
+end
